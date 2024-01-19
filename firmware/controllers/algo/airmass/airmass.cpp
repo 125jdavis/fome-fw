@@ -52,16 +52,26 @@ float AirmassVeModelBase::getVe(int rpm, float load, bool postState) const {
 			engine->outputChannels.veBlendParameter[i] = result.BlendParameter;
 			engine->outputChannels.veBlendBias[i] = result.Bias;
 			engine->outputChannels.veBlendOutput[i] = result.Value;
+			engine->ouptupChannels.veBlendMethod[i] = result.BlendMethod;
 		}
 
 		// Skip extra floating point math if we can...
 		if (result.Value == 0) {
 			continue;
+		}	
+		
+		if(result.BlendMethod == 1){
+			// If the blend table method is set to 1 ("blend")
+			// use the bias value to determine the weighting
+			// result.Value is bias * table value
+			ve = (ve*(1-result.Bias)) + (Result.Value); 
 		}
-
-		// Apply as a multiplier, not as an adder
-		// Value of +5 means add 5%, aka multiply by 1.05
-		ve *= ((100 + result.Value) * 0.01f);
+		
+		else{
+			// Otherwise, apply as a multiplier.
+			// Value of +5 means add 5%, aka multiply by 1.05
+			ve *= ((100 + result.Value) * 0.01f);
+		}
 	}
 
 	if (postState) {
