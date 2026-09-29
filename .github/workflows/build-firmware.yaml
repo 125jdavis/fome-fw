@@ -170,6 +170,12 @@ jobs:
       with:
         submodules: true
 
+    - name: Install mtools
+      working-directory: ./.github/workflows/
+      run: |
+        sudo ./add-ubuntu-latest-apt-mirrors.sh
+        sudo apt-get install mtools
+
     # - uses: actions/setup-java@v4
     #   with:
     #     distribution: 'zulu'
