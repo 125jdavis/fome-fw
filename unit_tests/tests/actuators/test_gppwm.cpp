@@ -2,6 +2,7 @@
 
 #include "gppwm_channel.h"
 #include "gppwm.h"
+#include "boost_control.h"
 
 #include "mocks.h"
 
@@ -97,4 +98,26 @@ TEST(GpPwm, TestGetOutput) {
 	Sensor::setMockValue(SensorType::Tps1, 35.0f);
 	Sensor::setMockValue(SensorType::Rpm, 1200);
 	EXPECT_FLOAT_EQ(35.0f, ch.getOutput().Result);
+}
+
+TEST(GpPwm, TestAdditionalAxisValues) {
+	EngineTestHelper eth(engine_type_e::TEST_ENGINE);
+
+	Sensor::resetAllMocks();
+	Sensor::setMockValue(SensorType::FuelPressureInjector, 420.0f);
+	Sensor::setMockValue(SensorType::TurbochargerSpeed, 125000.0f);
+	engine->engineState.clutchDownState = true;
+	engine->engineState.brakePedalState = true;
+	engine->module<BoostController>().boostControlTarget = 182.5f;
+
+	EXPECT_FLOAT_EQ(182.5f, readGppwmChannel(GPPWM_BoostTarget).Value);
+	EXPECT_FLOAT_EQ(420.0f, readGppwmChannel(GPPWM_FuelPressure).Value);
+	EXPECT_FLOAT_EQ(100.0f, readGppwmChannel(GPPWM_ClutchState).Value);
+	EXPECT_FLOAT_EQ(100.0f, readGppwmChannel(GPPWM_BrakeState).Value);
+	EXPECT_FLOAT_EQ(125000.0f, readGppwmChannel(GPPWM_TurboSpeed).Value);
+
+	engine->engineState.clutchDownState = false;
+	engine->engineState.brakePedalState = false;
+	EXPECT_FLOAT_EQ(0.0f, readGppwmChannel(GPPWM_ClutchState).Value);
+	EXPECT_FLOAT_EQ(0.0f, readGppwmChannel(GPPWM_BrakeState).Value);
 }
