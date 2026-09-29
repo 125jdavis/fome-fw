@@ -108,7 +108,7 @@ TEST(GpPwm, TestAdditionalAxisValues) {
 	Sensor::setMockValue(SensorType::TurbochargerSpeed, 125000.0f);
 	engine->engineState.clutchDownState = true;
 	engine->engineState.brakePedalState = true;
-	engine->module<BoostController>().boostControlTarget = 182.5f;
+	engine->module<BoostController>().unmock().boostControlTarget = 182.5f;
 
 	EXPECT_FLOAT_EQ(182.5f, readGppwmChannel(GPPWM_BoostTarget).Value);
 	EXPECT_FLOAT_EQ(420.0f, readGppwmChannel(GPPWM_FuelPressure).Value);

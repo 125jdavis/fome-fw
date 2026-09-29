@@ -89,7 +89,7 @@ expected<float> readGppwmChannel(gppwm_channel_e channel) {
 		case GPPWM_AcState:
 			return 100.0f * engine->module<AcController>()->acCompressorState;
 		case GPPWM_BoostTarget:
-			return static_cast<float>(engine->module<BoostController>().boostControlTarget);
+			return static_cast<float>(engine->module<BoostController>().unmock().boostControlTarget);
 		case GPPWM_FuelPressure:
 			return Sensor::get(SensorType::FuelPressureInjector);
 		case GPPWM_ClutchState:
