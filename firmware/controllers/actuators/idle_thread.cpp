@@ -46,7 +46,8 @@ IIdleTargetController::TargetInfo IdleTargetController::getTargetRpm(float clt) 
 	if (engineConfiguration->idleReturnTargetRamp && engineConfiguration->idleReturnTargetRampTime > 0) {
 		// Ramp the target down from the transition RPM to normal over the configured time
 		float timeSinceIdleEntry = m_timeInIdlePhase.getElapsedSeconds();
-		target += interpolateClamped(0, rpmUpperLimit, engineConfiguration->idleReturnTargetRampTime, 0, timeSinceIdleEntry);
+		target += interpolateClamped(
+				0, rpmUpperLimit, engineConfiguration->idleReturnTargetRampTime, 0, timeSinceIdleEntry);
 	}
 
 	idleTarget = target;
