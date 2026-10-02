@@ -4,6 +4,7 @@
 #include "gppwm_channel.h"
 
 #include "ac_control.h"
+#include "boost_control.h"
 #include "table_helper.h"
 #include <rusefi/expected.h>
 
@@ -87,6 +88,16 @@ expected<float> readGppwmChannel(gppwm_channel_e channel) {
 			return Sensor::get(SensorType::OilTemperature);
 		case GPPWM_AcState:
 			return 100.0f * engine->module<AcController>()->acCompressorState;
+		case GPPWM_BoostTarget:
+			return static_cast<float>(engine->module<BoostController>().unmock().boostControlTarget);
+		case GPPWM_FuelPressure:
+			return Sensor::get(SensorType::FuelPressureInjector);
+		case GPPWM_ClutchState:
+			return 100.0f * engine->engineState.clutchDownState;
+		case GPPWM_BrakeState:
+			return 100.0f * engine->engineState.brakePedalState;
+		case GPPWM_TurboSpeed:
+			return Sensor::get(SensorType::TurbochargerSpeed);
 	}
 
 	return unexpected;
