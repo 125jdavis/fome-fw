@@ -49,6 +49,7 @@ or
 
 
 ### Changed
+ - Coasting IAC position curve in TunerStudio now labels its Y-axis and second table column "IAC Position" instead of "Multiplier", since the table sets an absolute commanded idle position, not a correction multiplier
  - Cylinder count is now derived automatically from the firing order instead of being a separate setting, so the two can no longer disagree.
  - Instant RPM is now used automatically on triggers with 24 or more teeth per engine cycle (a 12 tooth crank wheel or better), instead of only when "Always use instant RPM" was enabled. RPM, and everything derived from it, now responds within a fraction of an engine cycle instead of once per cycle. The setting remains, and now forces instant RPM on triggers with fewer teeth than that.
 
