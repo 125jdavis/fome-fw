@@ -501,8 +501,8 @@ int8_t gapTrackingLengthOverride;How many consecutive gap rations have to match 
  pin_input_mode_e oilPressureSwitchMode
 
 uint8_t autoscale inhibitIdleAfterCrankingTime;Inhibit closed loop idle for this duration after cranking.;"sec", 0.1, 0, 0, 10, 1
-uint8_t autoscale idleReturnTargetRampTime;Duration of the idle target ramp when returning to idle.;"sec", 0.1, 0, 0, 25, 1
-uint8_t autoscale idleReturnIacRampTime;Duration of the IAC position ramp when returning to idle.;"sec", 0.1, 0, 0, 25, 1
+uint8_t autoscale idleReturnTargetRampTime;Duration of the idle target ramp when returning to idle.;"sec", 0.1, 0, 0, 10, 1
+uint8_t autoscale idleReturnIacRampTime;Duration of the IAC position ramp when returning to idle.;"sec", 0.1, 0, 0, 10, 1
 
 angle_t fixedModeTiming;This value is the ignition timing used when in 'fixed timing' mode, i.e. constant timing\nThis mode is useful when adjusting distributor location.;"RPM", 1, 0, 0, 3000, 0
 
