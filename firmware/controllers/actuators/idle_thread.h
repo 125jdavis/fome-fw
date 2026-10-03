@@ -94,6 +94,13 @@ private:
 	efitimeus_t restoreAfterPidResetTimeUs = 0;
 
 	Pid m_timingPid;
+
+	// Ramp from coasting IAC position to open loop position on return to idle
+	Timer m_iacRampTimer;
+	float m_iacRampStart = 0;
+	float m_lastCoastingPosition = 0;
+	bool m_iacRampActive = false;
+	bool m_lastOpenLoopWasCoasting = false;
 };
 
 struct IIdleTargetController {

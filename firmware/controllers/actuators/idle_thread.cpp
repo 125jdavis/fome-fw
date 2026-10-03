@@ -43,10 +43,11 @@ IIdleTargetController::TargetInfo IdleTargetController::getTargetRpm(float clt) 
 	// Higher exit than entry to add some hysteresis to avoid bouncing around upper threshold
 	float exitRpm = target + 1.5 * rpmUpperLimit;
 
-	if (engineConfiguration->idleReturnTargetRamp) {
-		// Ramp the target down from the transition RPM to normal over a few seconds
+	if (engineConfiguration->idleReturnTargetRamp && engineConfiguration->idleReturnTargetRampTime > 0) {
+		// Ramp the target down from the transition RPM to normal over the configured time
 		float timeSinceIdleEntry = m_timeInIdlePhase.getElapsedSeconds();
-		target += interpolateClamped(0, rpmUpperLimit, 3, 0, timeSinceIdleEntry);
+		target += interpolateClamped(
+				0, rpmUpperLimit, engineConfiguration->idleReturnTargetRampTime, 0, timeSinceIdleEntry);
 	}
 
 	idleTarget = target;
@@ -219,10 +220,34 @@ IdleController::getOpenLoop(Phase phase, float rpm, float clt, SensorResult tps,
 	// If coasting (and enabled), use the coasting position table instead of normal open loop
 	isIacTableForCoasting = engineConfiguration->useIacTableForCoasting && isIdleCoasting;
 	if (isIacTableForCoasting) {
-		return interpolate2d(rpm, config->iacCoastingRpmBins, config->iacCoasting);
+		m_lastCoastingPosition = interpolate2d(rpm, config->iacCoastingRpmBins, config->iacCoasting);
+		m_lastOpenLoopWasCoasting = true;
+		return m_lastCoastingPosition;
 	}
 
 	percent_t running = getRunningOpenLoop(rpm, clt, tps);
+
+	// Returning to idle from coasting: ramp from the coasting position down to the normal open loop position
+	if (phase == Phase::Idling && m_lastOpenLoopWasCoasting) {
+		m_iacRampTimer.reset();
+		m_iacRampStart = m_lastCoastingPosition;
+		m_iacRampActive = engineConfiguration->idleReturnIacRamp;
+	}
+	m_lastOpenLoopWasCoasting = false;
+
+	if (phase != Phase::Idling) {
+		m_iacRampActive = false;
+	}
+
+	float rampTime = engineConfiguration->idleReturnIacRampTime;
+	if (m_iacRampActive && rampTime > 0) {
+		float elapsed = m_iacRampTimer.getElapsedSeconds();
+		if (elapsed >= rampTime) {
+			m_iacRampActive = false;
+		} else {
+			running = interpolateClamped(0, m_iacRampStart, rampTime, running, elapsed);
+		}
+	}
 
 	// Interpolate between cranking and running over a short time
 	// This clamps once you fall off the end, so no explicit check for >1 required

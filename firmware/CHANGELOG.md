@@ -16,6 +16,7 @@ or
  - 
 
 ### Added
+ - New "Ramp IAC on return to idle" setting: linearly ramps the IAC position from the coasting position down to the base open loop position when returning to idle, helping prevent closed loop PID oscillation. The ramp duration is configurable (default 3 seconds). The existing "Ramp target on return to idle" duration is now also configurable (default 3 seconds, previously fixed).
  -
 
 ### Fixed

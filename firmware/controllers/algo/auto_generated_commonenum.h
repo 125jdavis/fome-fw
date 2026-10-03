@@ -390,8 +390,14 @@ constexpr inline const char* getGppwm_channel_e(gppwm_channel_e value) {
 			return "GPPWM_AuxTemp2";
 		case GPPWM_BaroPressure:
 			return "GPPWM_BaroPressure";
+		case GPPWM_BoostTarget:
+			return "GPPWM_BoostTarget";
+		case GPPWM_BrakeState:
+			return "GPPWM_BrakeState";
 		case GPPWM_Clt:
 			return "GPPWM_Clt";
+		case GPPWM_ClutchState:
+			return "GPPWM_ClutchState";
 		case GPPWM_DetectedGear:
 			return "GPPWM_DetectedGear";
 		case GPPWM_Egt1:
@@ -402,6 +408,8 @@ constexpr inline const char* getGppwm_channel_e(gppwm_channel_e value) {
 			return "GPPWM_EthanolPercent";
 		case GPPWM_FuelLoad:
 			return "GPPWM_FuelLoad";
+		case GPPWM_FuelPressure:
+			return "GPPWM_FuelPressure";
 		case GPPWM_GppwmOutput1:
 			return "GPPWM_GppwmOutput1";
 		case GPPWM_GppwmOutput2:
@@ -428,6 +436,8 @@ constexpr inline const char* getGppwm_channel_e(gppwm_channel_e value) {
 			return "GPPWM_Rpm";
 		case GPPWM_Tps:
 			return "GPPWM_Tps";
+		case GPPWM_TurboSpeed:
+			return "GPPWM_TurboSpeed";
 		case GPPWM_VVT_1E:
 			return "GPPWM_VVT_1E";
 		case GPPWM_VVT_1I:
