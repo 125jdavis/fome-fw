@@ -503,6 +503,7 @@ int8_t gapTrackingLengthOverride;How many consecutive gap rations have to match 
 uint8_t autoscale inhibitIdleAfterCrankingTime;Inhibit closed loop idle for this duration after cranking.;"sec", 0.1, 0, 0, 10, 1
 uint8_t autoscale idleReturnTargetRampTime;Duration of the idle target ramp when returning to idle.;"sec", 0.1, 0, 0, 10, 1
 uint8_t autoscale idleReturnIacRampTime;Duration of the IAC position ramp when returning to idle.;"sec", 0.1, 0, 0, 10, 1
+uint8_t autoscale idleReturnIacFeedForward;Extra IAC position added to the starting point of the ramp from the coasting position to the base idle position. Helps reduce RPM undershoot when returning to idle.;"%", 0.5, 0, 0, 50, 1
 
 angle_t fixedModeTiming;This value is the ignition timing used when in 'fixed timing' mode, i.e. constant timing\nThis mode is useful when adjusting distributor location.;"RPM", 1, 0, 0, 3000, 0
 
