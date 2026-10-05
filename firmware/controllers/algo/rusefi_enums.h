@@ -510,6 +510,7 @@ typedef enum __attribute__((__packed__)) {
 	GPPWM_GppwmOutput4 = 21,
 	GPPWM_LuaGauge1 = 22,
 	GPPWM_LuaGauge2 = 23,
+<<<<<<< HEAD
 	GPPWM_Rpm = 24,
 	GPPWM_DetectedGear = 25,
 	GPPWM_BaroPressure = 26,
@@ -526,6 +527,25 @@ typedef enum __attribute__((__packed__)) {
 	GPPWM_ClutchState = 37,
 	GPPWM_BrakeState = 38,
 	GPPWM_TurboSpeed = 39,
+=======
+	GPPWM_LuaGauge3 = 24,
+	GPPWM_LuaGauge4 = 25,
+	GPPWM_LuaGauge5 = 26,
+	GPPWM_LuaGauge6 = 27,
+	GPPWM_LuaGauge7 = 28,
+	GPPWM_LuaGauge8 = 29,
+	GPPWM_Rpm = 30,
+	GPPWM_DetectedGear = 31,
+	GPPWM_BaroPressure = 32,
+	GPPWM_Egt1 = 33,
+	GPPWM_Egt2 = 34,
+	GPPWM_AuxLinear3 = 35,
+	GPPWM_AuxLinear4 = 36,
+	GPPWM_VehicleSpeed = 37,
+	GPPWM_OilPressure = 38,
+	GPPWM_OilTemp = 39,
+	GPPWM_AcState = 40,
+>>>>>>> upstream/master
 } gppwm_channel_e; // TODO Keep pwmAxisLabels in tunerstudio.template.ini in sync when adding additional options to this
 				   // enum
 
@@ -604,9 +624,6 @@ typedef enum __attribute__((__packed__)) {
 	HPFP_CAM_EX2 = 4,
 } hpfp_cam_e;
 
-#if __cplusplus
-#include <cstdint>
-
 enum class TsCalMode : uint8_t {
 	None = 0,
 	Tps1Max = 1,
@@ -670,6 +687,11 @@ enum class DtcSeverity : uint8_t {
 	LimpLevel2 = 3,
 };
 
+enum class VeTableType : uint8_t {
+	SpeedDensity = 0,
+	AlphaN = 1,
+};
+
 typedef enum __attribute__((__packed__)) {
 	none = 0,
 	first,
@@ -678,5 +700,3 @@ typedef enum __attribute__((__packed__)) {
 } canBroadcast_e;
 
 #define SC_Exhaust_First 1
-
-#endif // __cplusplus
