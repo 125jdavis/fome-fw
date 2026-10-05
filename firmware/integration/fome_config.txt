@@ -1592,10 +1592,8 @@ float[IAT_CURVE_SIZE] iatFuelCorr;;"ratio", 1, 0, 0, 5, 2
 float[CLT_CURVE_SIZE] autotemp cltIdleCorrBins;CLT-based idle position multiplier for simple manual idle controller;"C", 1, 0, -100, 250, 2
 float[CLT_CURVE_SIZE] cltIdleCorr;    CLT-based idle position multiplier for simple manual idle controller;"ratio", 1, 0, 0, 10, 2
 
-#define IDLE_RETURN_FF_SIZE 8
-int8_t[IDLE_RETURN_FF_SIZE] autotemp idleReturnIacFfCltBins;Coolant temperature axis for idle re-entry feed-forward;"C", 1, 0, -40, 120, 0
-uint8_t[IDLE_RETURN_FF_SIZE] autoscale idleReturnIacFfPosBins;Coasting IAC position axis for idle re-entry feed-forward;"%", 0.5, 0, 0, 100, 1
-uint8_t[IDLE_RETURN_FF_SIZE x IDLE_RETURN_FF_SIZE] autoscale idleReturnIacFfTable;Extra IAC position added to the start of the ramp from the coasting position to the base idle position. Helps reduce RPM undershoot when returning to idle.;"%", 0.5, 0, 0, 50, 1
+int8_t[CLT_CURVE_SIZE] autotemp idleReturnIacFfCltBins;Coolant temperature axis for idle re-entry feed-forward;"C", 1, 0, -40, 120, 0
+uint8_t[CLT_CURVE_SIZE] autoscale idleReturnIacFf;Extra IAC position added to the start of the ramp when returning to idle. Helps reduce RPM undershoot when returning to idle.;"%", 0.5, 0, 0, 50, 1
 
 uint32_t[MAF_DECODING_COUNT] autoscale mafDecoding;;"kg/hour", 0.001, 0, 0, 4000, 3
 uint16_t[MAF_DECODING_COUNT] autoscale mafDecodingBins;;"V", 0.01, 0, 0, 20, 2

@@ -100,7 +100,7 @@ private:
 	float m_iacRampStart = 0;
 	float m_lastCoastingPosition = 0;
 	bool m_iacRampActive = false;
-	bool m_lastOpenLoopWasCoasting = false;
+	bool m_lastPhaseWasCoasting = false;
 };
 
 struct IIdleTargetController {

@@ -16,7 +16,7 @@ or
  - 
 
 ### Added
- - New "Ramp IAC on return to idle" setting: linearly ramps the IAC position from the coasting position down to the base open loop position when returning to idle, helping prevent closed loop PID oscillation. The ramp duration is configurable (default 3 seconds). The existing "Ramp target on return to idle" duration is now also configurable (default 3 seconds, previously fixed). A new "Idle re-entry feed-forward" table (coolant temperature vs. IAC position, default 0) adds extra IAC position to the start of the IAC ramp to reduce RPM undershoot on return to idle. The IAC ramp time defaults to 0 seconds, so existing behavior is unchanged until it is set. The new table changes the configuration layout, so the ECU will reset its stored tune on update.
+ - New "Ramp IAC on return to idle" setting: linearly ramps the IAC position from the coasting position down to the base open loop position when returning to idle, helping prevent closed loop PID oscillation. The ramp duration is configurable (default 3 seconds). The existing "Ramp target on return to idle" duration is now also configurable (default 3 seconds, previously fixed). A new "Idle re-entry feed-forward" curve (coolant temperature vs. IAC position, default 0) adds extra IAC position to the start of the IAC ramp to reduce RPM undershoot on return to idle. The ramp works with or without the coasting idle table; without it, the ramp goes from base + feed-forward down to base. The IAC ramp time defaults to 0 seconds, so existing behavior is unchanged until it is set. The new curve changes the configuration layout, so the ECU will reset its stored tune on update.
  -
 
 ### Fixed

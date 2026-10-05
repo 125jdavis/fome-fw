@@ -214,6 +214,7 @@ IdleController::getOpenLoop(Phase phase, float rpm, float clt, SensorResult tps,
 
 	// if we're cranking, nothing more to do.
 	if (isCranking) {
+		m_lastPhaseWasCoasting = false;
 		return crankingValvePosition;
 	}
 
@@ -221,24 +222,25 @@ IdleController::getOpenLoop(Phase phase, float rpm, float clt, SensorResult tps,
 	isIacTableForCoasting = engineConfiguration->useIacTableForCoasting && isIdleCoasting;
 	if (isIacTableForCoasting) {
 		m_lastCoastingPosition = interpolate2d(rpm, config->iacCoastingRpmBins, config->iacCoasting);
-		m_lastOpenLoopWasCoasting = true;
+		m_lastPhaseWasCoasting = true;
 		return m_lastCoastingPosition;
 	}
 
 	percent_t running = getRunningOpenLoop(rpm, clt, tps);
 
-	// Returning to idle from coasting: ramp from the coasting position down to the normal open loop position
-	if (phase == Phase::Idling && m_lastOpenLoopWasCoasting) {
+	if (isIdleCoasting) {
+		// Not using the coasting table, so the ramp starts from the base position
+		m_lastCoastingPosition = running;
+	}
+
+	// Returning to idle from coasting: ramp from (coasting position + feed-forward) down to the normal open loop
+	if (phase == Phase::Idling && m_lastPhaseWasCoasting) {
 		m_iacRampTimer.reset();
-		m_iacRampStart = m_lastCoastingPosition + interpolate3d(
-														  config->idleReturnIacFfTable,
-														  config->idleReturnIacFfCltBins,
-														  clt,
-														  config->idleReturnIacFfPosBins,
-														  m_lastCoastingPosition);
+		m_iacRampStart =
+				m_lastCoastingPosition + interpolate2d(clt, config->idleReturnIacFfCltBins, config->idleReturnIacFf);
 		m_iacRampActive = engineConfiguration->idleReturnIacRamp;
 	}
-	m_lastOpenLoopWasCoasting = false;
+	m_lastPhaseWasCoasting = isIdleCoasting;
 
 	if (phase != Phase::Idling) {
 		m_iacRampActive = false;
