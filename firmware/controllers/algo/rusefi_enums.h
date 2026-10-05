@@ -510,24 +510,6 @@ typedef enum __attribute__((__packed__)) {
 	GPPWM_GppwmOutput4 = 21,
 	GPPWM_LuaGauge1 = 22,
 	GPPWM_LuaGauge2 = 23,
-<<<<<<< HEAD
-	GPPWM_Rpm = 24,
-	GPPWM_DetectedGear = 25,
-	GPPWM_BaroPressure = 26,
-	GPPWM_Egt1 = 27,
-	GPPWM_Egt2 = 28,
-	GPPWM_AuxLinear3 = 29,
-	GPPWM_AuxLinear4 = 30,
-	GPPWM_VehicleSpeed = 31,
-	GPPWM_OilPressure = 32,
-	GPPWM_OilTemp = 33,
-	GPPWM_AcState = 34,
-	GPPWM_BoostTarget = 35,
-	GPPWM_FuelPressure = 36,
-	GPPWM_ClutchState = 37,
-	GPPWM_BrakeState = 38,
-	GPPWM_TurboSpeed = 39,
-=======
 	GPPWM_LuaGauge3 = 24,
 	GPPWM_LuaGauge4 = 25,
 	GPPWM_LuaGauge5 = 26,
@@ -545,7 +527,11 @@ typedef enum __attribute__((__packed__)) {
 	GPPWM_OilPressure = 38,
 	GPPWM_OilTemp = 39,
 	GPPWM_AcState = 40,
->>>>>>> upstream/master
+	GPPWM_BoostTarget = 41,
+	GPPWM_FuelPressure = 42,
+	GPPWM_ClutchState = 43,
+	GPPWM_BrakeState = 44,
+	GPPWM_TurboSpeed = 45,
 } gppwm_channel_e; // TODO Keep pwmAxisLabels in tunerstudio.template.ini in sync when adding additional options to this
 				   // enum
 
