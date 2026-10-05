@@ -135,7 +135,11 @@ void setDefaultIdleParameters() {
 	engineConfiguration->idleReturnTargetRamp = true;
 	engineConfiguration->idleReturnTargetRampTime = 3;
 	engineConfiguration->idleReturnIacRamp = true;
-	engineConfiguration->idleReturnIacRampTime = 3;
+	engineConfiguration->idleReturnIacRampTime = 0;
+
+	copyArray(config->idleReturnIacFfCltBins, {-40, -20, 0, 20, 40, 60, 80, 100});
+	setLinearCurve(config->idleReturnIacFfPosBins, 0, 100, 1);
+	setTable(config->idleReturnIacFfTable, 0);
 }
 
 void startIdleThread() {

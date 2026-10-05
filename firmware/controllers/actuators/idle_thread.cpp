@@ -230,7 +230,12 @@ IdleController::getOpenLoop(Phase phase, float rpm, float clt, SensorResult tps,
 	// Returning to idle from coasting: ramp from the coasting position down to the normal open loop position
 	if (phase == Phase::Idling && m_lastOpenLoopWasCoasting) {
 		m_iacRampTimer.reset();
-		m_iacRampStart = m_lastCoastingPosition + engineConfiguration->idleReturnIacFeedForward;
+		m_iacRampStart = m_lastCoastingPosition + interpolate3d(
+														  config->idleReturnIacFfTable,
+														  config->idleReturnIacFfCltBins,
+														  clt,
+														  config->idleReturnIacFfPosBins,
+														  m_lastCoastingPosition);
 		m_iacRampActive = engineConfiguration->idleReturnIacRamp;
 	}
 	m_lastOpenLoopWasCoasting = false;
