@@ -501,6 +501,8 @@ int8_t gapTrackingLengthOverride;How many consecutive gap rations have to match 
  pin_input_mode_e oilPressureSwitchMode
 
 uint8_t autoscale inhibitIdleAfterCrankingTime;Inhibit closed loop idle for this duration after cranking.;"sec", 0.1, 0, 0, 10, 1
+uint8_t autoscale idleReturnTargetRampTime;Duration of the idle target ramp when returning to idle.;"sec", 0.1, 0, 0, 10, 1
+uint8_t autoscale idleReturnIacRampTime;Duration of the IAC position ramp when returning to idle.;"sec", 0.1, 0, 0, 10, 1
 
 angle_t fixedModeTiming;This value is the ignition timing used when in 'fixed timing' mode, i.e. constant timing\nThis mode is useful when adjusting distributor location.;"RPM", 1, 0, 0, 3000, 0
 
@@ -687,7 +689,7 @@ bit is_enabled_spi_2
 	bit is_enabled_spi_3
 	bit isSdCardEnabled;enable sd/disable sd
 	bit rusefiVerbose29b,"29 bit","11 bit";Use 11 bit (standard) or 29 bit (extended) IDs for FOME verbose CAN format.
-	bit unused580b5
+	bit idleReturnIacRamp;Ramp the IAC position down from the coasting position when returning to idle. Helps prevent closed loop PID oscillation.
 	bit useStepperIdle;This setting should only be used if you have a stepper motor idle valve and a stepper motor driver installed.
 	
 	bit enabledStep1Limiter
@@ -1589,6 +1591,9 @@ float[IAT_CURVE_SIZE] iatFuelCorr;;"ratio", 1, 0, 0, 5, 2
 
 float[CLT_CURVE_SIZE] autotemp cltIdleCorrBins;CLT-based idle position multiplier for simple manual idle controller;"C", 1, 0, -100, 250, 2
 float[CLT_CURVE_SIZE] cltIdleCorr;    CLT-based idle position multiplier for simple manual idle controller;"ratio", 1, 0, 0, 10, 2
+
+int8_t[CLT_CURVE_SIZE] autotemp idleReturnIacFfCltBins;Coolant temperature axis for idle re-entry feed-forward;"C", 1, 0, -40, 120, 0
+uint8_t[CLT_CURVE_SIZE] autoscale idleReturnIacFf;Extra IAC position added to the start of the ramp when returning to idle. Helps reduce RPM undershoot when returning to idle.;"%", 0.5, 0, 0, 50, 1
 
 uint32_t[MAF_DECODING_COUNT] autoscale mafDecoding;;"kg/hour", 0.001, 0, 0, 4000, 3
 uint16_t[MAF_DECODING_COUNT] autoscale mafDecodingBins;;"V", 0.01, 0, 0, 20, 2

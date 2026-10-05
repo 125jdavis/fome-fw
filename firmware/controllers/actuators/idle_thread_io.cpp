@@ -133,6 +133,12 @@ void setDefaultIdleParameters() {
 	engineConfiguration->inhibitIdleAfterCrankingTime = 1;
 
 	engineConfiguration->idleReturnTargetRamp = true;
+	engineConfiguration->idleReturnTargetRampTime = 3;
+	engineConfiguration->idleReturnIacRamp = true;
+	engineConfiguration->idleReturnIacRampTime = 0;
+
+	setLinearCurve(config->idleReturnIacFfCltBins, -40, 120, 10);
+	setLinearCurve(config->idleReturnIacFf, 0, 0, 1);
 }
 
 void startIdleThread() {
