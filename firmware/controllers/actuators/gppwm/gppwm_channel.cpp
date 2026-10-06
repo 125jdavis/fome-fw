@@ -5,6 +5,7 @@
 
 #include "ac_control.h"
 #include "table_helper.h"
+#include "boost_control.h"
 #include <rusefi/expected.h>
 
 expected<float> readGppwmChannel(gppwm_channel_e channel) {
